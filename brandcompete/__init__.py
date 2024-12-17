@@ -1,0 +1,1 @@
+"""brandcompete module"""

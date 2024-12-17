@@ -204,7 +204,7 @@ class AIManServiceClient():
         """
         fetch_all_response = self._perform_request(
             RequestType.GET, Route.DATA_SOURCE.value)
-        datasources = list()
+        datasources = []
         for response in fetch_all_response["datasources"]:
             source = self.get_datasource_by_id(response["id"])
 
@@ -220,8 +220,6 @@ class AIManServiceClient():
         Returns:
             DataSource: None or Datasource object
         """
-        # TODO THA 2024-12-13 Check if response has a valid datasource
-
         url = f"{Route.DATA_SOURCE.value}/{datasource_id}"
         response = self._perform_request(RequestType.GET, url)
         source = response["datasource"]
