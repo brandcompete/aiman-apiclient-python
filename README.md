@@ -9,7 +9,7 @@ Python version: >=3.8.1,<=3.12
 pip install PIP-PACKAGE
 ```
 
-## Usage
+## Getting started
 
 ### Instantiate the api client
 
@@ -24,7 +24,7 @@ username = "john@doe.com"
 pw = "top_secret"
 ```
 
-#### api client
+#### Service client
 ```
 from brandcompete.core.credentials import TokenCredential
 from brandcompete.client import AIManServiceClient
