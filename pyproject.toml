@@ -3,12 +3,12 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "AI-Manager-Python-SDK"
+name = "aiman"
 authors = [
   {name = "brandcompete GmbH", email = "info@brandcompete.com"}
 ]
-description = "Service client to communicate with AI Man-API"
-version = "1.0.29"
+description = "Client Libraries to communicate with AIMan-API"
+version = "1.0.1"
 license = {file = "LICENSE"}
 requires-python = ">= 3.8"
 dependencies = [
@@ -42,7 +42,7 @@ readme = "README.md"
 
 [project.urls]
 Homepage = "https://www.brandcompete.com"
-Repository = "https://github.com/brandcompete/AI-Manager-Python-SDK"
+Repository = "https://github.com/brandcompete/aiman-apiclient-python"
 
 [tool.setuptools.packages]
 find = {} 
