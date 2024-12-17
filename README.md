@@ -1,5 +1,5 @@
 # AIMan API-Client by brandCompete
-[![Package](https://img.shields.io/badge/packages-latest-blue.svg)](https://test.pypi.org/project/AI-Manager-Python-SDK/) [![brandCompete](https://img.shields.io/badge/brandCompete-home-red.svg)](https://www.brandcompete.com)
+[![Package](https://img.shields.io/badge/package-latest-blue.svg)](https://test.pypi.org/project/AI-Manager-Python-SDK/) [![brandCompete](https://img.shields.io/badge/brandCompete-home-red.svg)](https://www.brandcompete.com) [![AIMan](https://img.shields.io/badge/AIMan-dev-green.svg)](https://aiman-dev.brandcompete.com)
 
 ## Preconditions
 Python version: >=3.8.1,<=3.12
