@@ -1,3 +1,5 @@
+# pylint: disable=line-too-long
+# pylint: disable=import-error
 """Module providing a Token Credential"""
 import json
 from typing import NamedTuple

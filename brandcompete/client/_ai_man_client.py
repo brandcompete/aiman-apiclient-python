@@ -1,3 +1,5 @@
+# pylint: disable=line-too-long
+# pylint: disable=import-error
 """Module providing a aiman service client"""
 import json
 import base64

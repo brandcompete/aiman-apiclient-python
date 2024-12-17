@@ -1,3 +1,5 @@
+# pylint: disable=line-too-long
+# pylint: disable=import-error
 """Module providing some utility or helper functions"""
 import time
 import os

@@ -1,3 +1,5 @@
+# pylint: disable=line-too-long
+# pylint: disable=too-many-instance-attributes
 """Module providing different dataclasses"""
 from dataclasses import dataclass
 from enum import Enum
