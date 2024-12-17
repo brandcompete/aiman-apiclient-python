@@ -1,7 +1,7 @@
 # pylint: disable=line-too-long
 # pylint: disable=import-error
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-instance-attributes
 """Module providing different dataclasses"""
 from dataclasses import dataclass
 from enum import Enum
