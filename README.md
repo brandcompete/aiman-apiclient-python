@@ -32,7 +32,7 @@ from brandcompete.client import AIManServiceClient
 token_credential = TokenCredential(api_host_url=url, user_name=username, password=pw)
 client = AIManServiceClient(credential=token_credential)
 ```
-
+#### Autorefresh JWT-Token
 The client takes care of updating the token during the client's runtime if it has expired.
 The automatic refresh can be controlled via optional parameter ```auto_refresh_token=True or False``` of the TokenCredential.
 
