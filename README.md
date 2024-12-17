@@ -1,8 +1,7 @@
-# brandcompete  aiman 
-### Client Libraries to communicate with AIMan-API
+# AIMan API-Client by brandCompete
 
 ## Preconditions
-Python version: >=3.8.1,<3.12
+Python version: >=3.8.1,<=3.12
 
 ## Installation
 
