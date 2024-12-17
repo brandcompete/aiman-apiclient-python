@@ -1,12 +1,8 @@
-# brandcompete AI-Manager-Python-SDK
+# brandcompete  aiman 
+### Client Libraries to communicate with AIMan-API
 
 ## Preconditions
-
 Python version: >=3.8.1,<3.12
-
-## Example
-We have created an example (demo) project to demonstrate the use of the SDK within a project.
-The repository can found [here](https://github.com/brandcompete/AI-Manager-Usage-Example)
 
 ## Installation
 
@@ -29,14 +25,10 @@ username = "john@doe.com"
 pw = "top_secret"
 ```
 
-#### Example
+#### api client
 ```
 from brandcompete.core.credentials import TokenCredential
 from brandcompete.client import AIManServiceClient
-
-url = "https://aiman-api-test.brandcompete.com"
-username = "john@doe.com"
-pw = "top_secret"
 
 token_credential = TokenCredential(api_host_url=url, user_name=username, password=pw)
 client = AIManServiceClient(credential=token_credential)
@@ -45,7 +37,6 @@ client = AIManServiceClient(credential=token_credential)
 The client takes care of updating the token during the client's runtime if it has expired.
 The automatic refresh can be controlled via optional parameter ```auto_refresh_token=True or False``` of the TokenCredential.
 
-Example:
 ```
 token_credential = TokenCredential(
     api_host_url=url, 
