@@ -1,5 +1,5 @@
 # AIMan API-Client by brandCompete
-[![Package](https://img.shields.io/badge/packages-latest-blue.svg)](https://test.pypi.org/project/aiman/1.0.1/) [![brandCompete](https://img.shields.io/badge/brandcompete-home-red.svg)](https://www.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_ui-dev-green.svg)](https://aiman-dev.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_api-dev-green.svg)](https://aiman-api-dev.brandcompete.com/api/v1/spec-ext.html)
+[![Package](https://img.shields.io/badge/package-latest-blue.svg)](https://test.pypi.org/project/aiman) [![brandCompete](https://img.shields.io/badge/brandcompete-home-darkred.svg)](https://www.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_ui-dev-green.svg)](https://aiman-dev.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_api-dev-green.svg)](https://aiman-api-dev.brandcompete.com/api/v1/spec-ext.html)
 
 ## Preconditions
 Python version: >=3.8.1,<=3.12
