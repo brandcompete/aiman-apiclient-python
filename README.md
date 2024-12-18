@@ -27,11 +27,12 @@ client = AIManServiceClient(
 The client takes care of updating the token during the client's runtime if it has expired.
 
 ### Fetching available AI-Models
-
-This method returns a list of type: AIModel (```List[AIModel]```)
-
+This method returns a list of available models of type: AIModel (```List[AIModel]```)
+A ```model_tag must``` always be specified for a prompt. This specification is located in each AIModel object. Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
 ```
 models = client.get_models()
+for model in models:
+    print(f"[default tag:{model.default_model_tag_id:4}] {model.name.upper():25} - {model.short_description}")
 ```
 
 ### Prompting a simple query to a specific model
@@ -48,8 +49,7 @@ response:str = client.prompt(
 response:dict = client.prompt(
     model_tag=1, 
     query="My query ask something about the given file content...", 
-    attachments=["file/path/file_1.pdf", "file/path/file_2.xlsx"]
-    )
+    attachments=["file/path/file_1.pdf", "file/path/file_2.xlsx"])
    
 ```
 
