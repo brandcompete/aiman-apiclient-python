@@ -7,7 +7,6 @@ import time
 import os
 from typing import Optional
 from urllib.parse import urlparse
-from brandcompete.core.classes import Loader
 
 class Util:
     """Represents a Utility Class"""
@@ -128,29 +127,6 @@ class Util:
             return ""
         if file_ext in {"png", "tif", "jpeg", "jpg"}:
             return f"image/{file_ext}"
-        return None
-
-    @classmethod
-    def get_loader_by_ext(cls, file_ext:str) -> tuple:
-        """Get a specific file content loader by file extension
-
-        Args:
-            file_ext (str): file extension
-
-        Returns:
-            tuple: loader and mime type
-        """
-        file_ext = file_ext.lower()
-        if file_ext == "pdf":
-            return Loader.PDF, "application/pdf"
-        if file_ext == "csv":
-            return Loader.CSV, "application/csv"
-        if file_ext == "xlsx":
-            return Loader.EXCEL, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        if file_ext == "docx":
-            return Loader.DOCX, ""
-        if file_ext in {"png", "tif", "jpeg", "jpg"}:
-            return Loader.IMAGE, f"image/{file_ext}"
         return None
 
 __all__ = [

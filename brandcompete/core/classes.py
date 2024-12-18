@@ -292,7 +292,6 @@ class Attachment:
     base64: str = ""
     size: int = 0
     mime_type: str = ""
-    
 
     @classmethod
     def to_dict(cls):
