@@ -7,7 +7,7 @@ Python version: >=3.8.1,<=3.12
 ## Installation
 
 ```
-pip install PIP-PACKAGE
+pip install aiman
 ```
 
 ## Getting started
