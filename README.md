@@ -13,37 +13,18 @@ pip install aiman
 ## Getting started
 
 ### Instantiate the api client
-
-The client authenticates itself for all requests via a JWT token. 
-To obtain a token, the client must log in to the corresponding API host via username and password.
-
-#### Credentials
-Use only the base address of the api as the url, like in this example:
+IMPORTANT: Use only the base address of the api as the url, like in this example:
 ```
-url = "https://aiman-api-test.brandcompete.com"
-username = "john@doe.com"
-pw = "top_secret"
-```
-
-#### Service client
-```
-from brandcompete.core.credentials import TokenCredential
 from brandcompete.client import AIManServiceClient
 
-token_credential = TokenCredential(api_host_url=url, user_name=username, password=pw)
-client = AIManServiceClient(credential=token_credential)
+client = AIManServiceClient(
+    host_url="https://aiman-api-test.brandcompete.com",
+    user_name="john@doe.com",
+    password="top_secret")
 ```
+
 #### Autorefresh JWT-Token
 The client takes care of updating the token during the client's runtime if it has expired.
-The automatic refresh can be controlled via optional parameter ```auto_refresh_token=True or False``` of the TokenCredential.
-
-```
-token_credential = TokenCredential(
-    api_host_url=url, 
-    user_name=username, 
-    password=pw, 
-    auto_refresh_token=True)
-```
 
 ### Fetching available AI-Models
 
@@ -62,65 +43,12 @@ response:str = client.prompt(
     query="my question to AI-Model")
 ```
 
-### Prompting a query with appended file content
-
-You can pass a specific file content to your prompt.
-Current available loaders are:
-- loader.PDF
-- loader.EXCEL
-- loader.DOCX
-- loader.CSV
-- loader.IMAGE
-
-#### PDF example
-```
-from brandcompete.core.classes import Loader
-
-query="Please summarize the following text: "  
+### Prompting a query and attach one or more files
+```    
 response:dict = client.prompt(
     model_tag=1, 
-    query=query, 
-    loader=Loader.PDF, 
-    file_append_to_query="path/to/file.pdf")
-```
-
-#### Image example
-```
-from brandcompete.core.classes import Loader
-
-query="describe what you see on the picture."  
-response:dict = client.prompt(
-    model_tag=21, 
-    query=query, 
-    loader=Loader.IMAGE, 
-    file_append_to_query="path/to/file.png")
-```
-
-### Prompting a query with appended file content and raging files
-
-```
-query="your question or order..."
-    
-response:dict = client.prompt(
-    model_tag=1, 
-    query=query, 
-    loader=Loader.PDF, 
-    file_append_to_query="path/to/file.pdf",
-    files_to_rag=["file/path/1.pdf", "file/path/2.pdf"]
-    )
-   
-```
-
-### Prompting a query with raging files only
-
-```
-query="your question or order..."
-    
-response:dict = client.prompt(
-    model_tag=1, 
-    query=query, 
-    loader=Loader.PDF, 
-    files_to_rag=["file/path/1.pdf", "file/path/2.pdf"]
+    query="My query ask something about the given file content...", 
+    attachments=["file/path/file_1.pdf", "file/path/file_2.xlsx"]
     )
    
 ```

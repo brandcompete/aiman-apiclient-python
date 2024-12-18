@@ -9,9 +9,6 @@ from typing import (
     List,
     Optional
 )
-import PyPDF2
-import pandas
-import docx2txt
 import requests
 from brandcompete.core.util import Util
 from brandcompete.core.credentials import TokenCredential
@@ -22,7 +19,6 @@ from brandcompete.core.classes import (
     PromptOptions,
     Route,
     Prompt,
-    Loader,
     RequestType
 )
 
@@ -30,9 +26,28 @@ from brandcompete.core.classes import (
 class AIManServiceClient():
     """Represents the AI Manager Service Client"""
 
-    def __init__(self, credential: TokenCredential) -> None:
+    def __init__(self, host_url:str = None, user_name:str = None, password:str = None, token_credential:TokenCredential = None ) -> None:
+        """ Instantiate a new Client to communicate with an AIMan API
+            NOTE: Use host, user and password or a TokenCredential Object
 
-        self.credential = credential
+        Args:
+            host_url (str, optional): _description_. Defaults to None.
+            user_name (str, optional): _description_. Defaults to None.
+            password (str, optional): _description_. Defaults to None.
+            token_credential (TokenCredential, optional): _description_. Defaults to None.
+
+        Raises:
+            ValueError: Missing credential informations
+        """
+        if token_credential is None:
+            if host_url is None:
+                raise ValueError("Missing parameter: host_url. EXPLAIN")
+            if password is None:
+                raise ValueError("Missing parameter: password. ")
+            if user_name is None:
+                raise ValueError("Missing parameter: username. ")
+            token_credential = TokenCredential(api_host_url=host_url, user_name=user_name,password=password)
+        self.credential = token_credential
         self.request_timeout = 200
 
     def get_models(self) -> List[AIModel]:
@@ -53,11 +68,10 @@ class AIManServiceClient():
         """_summary_
 
         Args:
-            model_id (int): the model id
+            model_tag (int): the model id
             query (str): Query to prompt
             loader (Optional[Loader], optional): Content loader. Defaults to None.
-            file_append_to_query (Optional[str], optional): Absolute path to a file (The content is added to the query). Defaults to None.
-            files_to_rag (Optional[List[str]], optional): Absolute path to a file (File content to rag). Defaults to None.
+            attachments (Optional[str], optional): Absolute path to a file. Defaults to None.
             prompt_options (Optional[PromptOptions], optional): Prompt options. Defaults to None.
 
         Raises:
@@ -66,10 +80,6 @@ class AIManServiceClient():
         Returns:
             dict: The API-Response as dict
         """
-        if "model_id" in kwargs:
-            raise ValueError(
-                "Error: model_id as parameter is deprecated. Use the model_tag instead. Aborting....")
-
         if "model_tag" not in kwargs:
             raise ValueError(
                 "Error: missing required argument: model_tag")
@@ -80,40 +90,8 @@ class AIManServiceClient():
 
         model_tag: int = kwargs["model_tag"]
         query = kwargs["query"]
-        loader = kwargs["loader"] if "loader" in kwargs else None
-        file_append_to_query = kwargs["file_append_to_query"] if "file_append_to_query" in kwargs else None
-        files_to_rag = kwargs["files_to_rag"] if "files_to_rag" in kwargs else None
+        attachments = kwargs["attachments"] if "attachments" in kwargs else None
         prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs else None
-
-        if loader is not None and file_append_to_query is None and files_to_rag is None:
-            raise ValueError(
-                "Missing Argument: file_append_to_query or files_to_rag")
-
-        attachments = []
-        if loader is not None:
-            if file_append_to_query is not None:
-                doc_content = self.get_document_content(
-                    file_path=file_append_to_query, loader=loader)
-                if loader == Loader.IMAGE:
-                    encoded_contents = base64.b64encode(doc_content)
-                    attachment = Attachment()
-                    attachment.name = Util.get_file_name(
-                        file_path=file_append_to_query)
-                    attachment.base64 = encoded_contents.decode()
-                    attachments.append(attachment.to_dict())
-                else:
-                    query += f" {doc_content}"
-
-            if files_to_rag is not None:
-
-                for file in files_to_rag:
-                    content = self.get_document_content(
-                        file_path=file, loader=loader)
-                    encoded_contents = base64.b64encode(str.encode(content))
-                    attachment = Attachment()
-                    attachment.name = Util.get_file_name(file_path=file)
-                    attachment.base64 = encoded_contents.decode()
-                    attachments.append(attachment.to_dict())
 
         if prompt_options is None:
             prompt_options = PromptOptions()
@@ -122,8 +100,11 @@ class AIManServiceClient():
         prompt_dict = prompt.to_dict()
         prompt_option_dict = prompt_options.to_dict()
         prompt_dict['options'] = prompt_option_dict
-        if len(attachments) > 0:
-            prompt_dict['attachments'] = attachments
+        if attachments is not None:
+            medias = self._build_media_attachments(attachments)
+            prompt_dict['attachments'] = []
+            for media in medias:
+                prompt_dict['attachments'].append(media.to_dict(media))
 
         prompt_dict['raw'] = prompt_options.raw
         prompt_dict['keepContext'] = prompt_options.keep_context
@@ -159,7 +140,7 @@ class AIManServiceClient():
             RequestType.POST, route=route, data=prompt_dict)
         return response
 
-    def get_document_content(self, file_path: str, loader: Loader = None) -> Optional[str]:
+    def _get_document_content(self, file_path: str) -> Optional[str]:
         """Parsing document content)
 
         Args:
@@ -167,36 +148,11 @@ class AIManServiceClient():
             loader (Loader, optional): Loader to use for parsing content. Defaults to None.
 
         Returns:
-            str: None or string
+            str: None or document content
         """
-        if loader == Loader.BASE64_ONLY:
-            with open(file_path, "rb") as rag_file:
-                return rag_file.read()
-        if loader == Loader.EXCEL:
-            df = pandas.read_excel(file_path)
-            return df.to_csv(sep='\t', index=False)
+        with open(file_path, "rb") as rag_file:
+            return rag_file.read()
 
-        if loader == Loader.IMAGE:
-            with open(file_path, "rb") as image_file:
-                return image_file.read()
-
-        if loader == Loader.CSV:
-            df = pandas.read_csv(file_path)
-            return df.to_csv(sep='\t', index=False)
-
-        if loader == Loader.PDF:
-            pdf_reader = PyPDF2.PdfReader(file_path)
-            text = ""
-            for i in enumerate(pdf_reader.pages):
-                page = pdf_reader.pages[i]
-                text += page.extract_text()
-            return text
-
-        if loader == Loader.DOCX:
-            text = docx2txt.process(file_path)
-            return text
-
-        return None
 
     def fetch_all_datasources(self) -> List[DataSource]:
         """Fetch all datasources related to the account
@@ -284,25 +240,8 @@ class AIManServiceClient():
         """
         datasource: DataSource = self.get_datasource_by_id(
             datasource_id=data_source_id)
+        datasource.media = self._build_media_attachments(sources=sources)
 
-        for path_or_url in sources:
-            path_or_url = path_or_url.lower()
-            if Util.validate_url(url=path_or_url, check_only=True):
-                datasource.media.append(
-                    {"name": path_or_url, "mime_type": "text/x-uri"})
-                continue
-            filename, file_ext = Util.get_file_name_and_ext(
-                file_path=path_or_url)
-            loader, mime_type = Util.get_loader_by_ext(file_ext=file_ext)
-            if loader is None:
-                raise ValueError(
-                    f"Error: Unsupported filetype:{file_ext} (file:{filename})")
-
-            content_base64 = base64.b64encode(self.get_document_content(
-                file_path=path_or_url, loader=Loader.BASE64_ONLY))
-            size_in_bytes = (len(content_base64) * (3/4)) - 1
-            datasource.media.append({"base64": content_base64.decode(
-            ), "name": filename, "mime_type": mime_type, "size": size_in_bytes * 10})
         return self.update_datasource(datasource=datasource)
 
     def update_datasource(self, datasource: DataSource) -> DataSource:
@@ -325,6 +264,41 @@ class AIManServiceClient():
         response = self._perform_request(
             RequestType.PUT, f"{Route.DATA_SOURCE.value}/{datasource.id}", data=data)
         return response
+
+    def _build_media_attachments(self, sources: List[str]) -> List[Attachment]:
+        """ Warning. This method is private and should not be called manually
+        Args:
+            sources (List[str]): List of file paths or url
+
+        Raises:
+            ValueError: By unsupported file types
+
+        Returns:
+            List[Attachments]: List of Attachment instances
+        """
+        medias = []
+        for path_or_url in sources:
+            attachment = Attachment()
+            path_or_url = path_or_url.lower()
+            if Util.validate_url(url=path_or_url, check_only=True):
+                attachment.name = path_or_url
+                attachment.mime_type = "text/x-uri"
+                medias.append(attachment)
+                continue
+
+            filename, file_ext = Util.get_file_name_and_ext(file_path=path_or_url)
+            mime_type = Util.get_mimetype_by_ext(file_ext=file_ext)
+            if mime_type is None:
+                raise ValueError(
+                    f"Error: Unsupported filetype:{file_ext} (file:{filename})")
+
+            attachment.base64 = base64.b64encode(self._get_document_content(file_path=path_or_url)).decode()
+            attachment.name = filename
+            attachment.size = ((len(attachment.base64) * (3/4)) - 1) * 10
+            attachment.mime_type = mime_type
+            medias.append(attachment)
+
+        return medias
 
     def _perform_request(self, request_type: RequestType, route: str, data: dict = None) -> dict:
         """Warning. This method is private and should not be called manually

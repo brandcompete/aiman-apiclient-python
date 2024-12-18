@@ -13,12 +13,7 @@ license = {file = "LICENSE"}
 requires-python = ">= 3.8"
 dependencies = [
     'pyjwt',
-    'setuptools',
-    'pandas',
-    'pypdf',
-    'PyPDF2',
-    'openpyxl',
-    'docx2txt'
+    'setuptools'
 ]
 classifiers = [
     'Development Status :: 4 - Beta',

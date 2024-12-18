@@ -5,6 +5,7 @@
 """Module providing some utility or helper functions"""
 import time
 import os
+from typing import Optional
 from urllib.parse import urlparse
 from brandcompete.core.classes import Loader
 
@@ -105,6 +106,29 @@ class Util:
         filename, file_extension = os.path.splitext(file_path)
         filename = cls.get_file_name(file_path=file_path)
         return filename, file_extension.replace(".","")
+
+    @classmethod
+    def get_mimetype_by_ext(cls, file_ext:str) -> Optional[str]:
+        """Get a specific mime type by file extension
+
+        Args:
+            file_ext (str): file extension
+
+        Returns:
+            str: None or mime type
+        """
+        file_ext = file_ext.lower()
+        if file_ext == "pdf":
+            return "application/pdf"
+        if file_ext == "csv":
+            return "application/csv"
+        if file_ext == "xlsx":
+            return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        if file_ext == "docx":
+            return ""
+        if file_ext in {"png", "tif", "jpeg", "jpg"}:
+            return f"image/{file_ext}"
+        return None
 
     @classmethod
     def get_loader_by_ext(cls, file_ext:str) -> tuple:

@@ -233,7 +233,7 @@ class DataSource:
     categories: Optional[List[str]] = None
     tags: Optional[List[str]] = None
     assoc_contexts: Optional[list] = None
-    media: Optional[list] = None
+    media: Optional[List[dict]] = None
     status: Optional[int] = -1
     media_count: Optional[int] = -1
     owner_id: Optional[int] = -1
@@ -290,17 +290,27 @@ class Attachment:
     """Represents an prompt attachment"""
     name: str = ""
     base64: str = ""
+    size: int = 0
+    mime_type: str = ""
+    
 
     @classmethod
     def to_dict(cls):
         """Parsing a Media Instance to a dict"""
-        return { "base64":  cls.base64, "name": cls.name}
+        return {
+            "base64":   cls.base64,
+            "name":     cls.name,
+            "size":     cls.size,
+            "mime_type":cls.mime_type
+            }
 
     @classmethod
     def from_dict(cls, values: dict):
         """Parsing a dict to a Media Instance"""
         cls.name = values["name"]
         cls.base64 = values["base64"]
+        cls.size = values["size"]
+        cls.mime_type = values["mime_type"]
 
 
 class Route(Enum):
@@ -311,17 +321,6 @@ class Route(Enum):
     PROMPT = '/api/v1/prompts/model_tag'
     PROMPT_WITH_DATASOURCE = '/api/v1/prompts'
     DATA_SOURCE = '/api/v1/datasources'
-
-
-class Loader(Enum):
-    """Enumeration of different loader"""
-    PDF = "PDFReader"
-    EXCEL = "PandasExcelReader"
-    BASE64_ONLY = "Base64"
-    DOCX = "DocxReader"
-    CSV = "SimpleCSVReader"
-    URL = "url"
-    IMAGE = "img"
 
 
 class RequestType(Enum):
@@ -338,6 +337,5 @@ __all__ = [
     "Query",
     "Route",
     "Prompt",
-    "Loader",
     "RequestType"
 ]
