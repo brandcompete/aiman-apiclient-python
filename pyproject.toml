@@ -7,7 +7,7 @@ name = "aiman"
 authors = [
   {name = "brandcompete GmbH", email = "info@brandcompete.com"}
 ]
-description = "Client Libraries to communicate with AIMan-API"
+description = "Client Library to communicate with AIMan-API"
 version = "1.0.1"
 license = {file = "LICENSE"}
 requires-python = ">= 3.8"
