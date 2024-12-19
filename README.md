@@ -28,7 +28,7 @@ The client takes care of updating the token during the client's runtime if it ha
 
 ### Fetching available AI-Models
 This method returns a list of available models of type: AIModel (```List[AIModel]```)
-A ```model_tag must``` always be specified for a prompt. This specification is located in each AIModel object. Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
+The ```model_tag_id``` needs always be specified for a prompt. This specification is located in each AIModel object. Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
 ```
 models = client.get_models()
 for model in models:
@@ -37,17 +37,17 @@ for model in models:
 
 ### Prompting a simple query to a specific model
 
-In order to submit a query, the model must be passed as a parameter via id
+In order to submit a query, the model must be passed as a parameter via ```model_tag```
 ```
 response:str = client.prompt(
-    model_tag=10,
+    model_tag_id=10,
     query="my question to AI-Model")
 ```
 
 ### Prompting a query and attach one or more files
 ```    
 response:dict = client.prompt(
-    model_tag=1, 
+    model_tag_id=1, 
     query="My query ask something about the given file content...", 
     attachments=["file/path/file_1.pdf", "file/path/file_2.xlsx"])
    
@@ -90,7 +90,8 @@ client.add_documents(
     sources=["path/to_my_data/test.pdf", "https://www.brandcompete.com"] )
 ```
 ### Prompt on datasource context
-Prompt in conjunction with a datasource id. You have to use the default_model_tag_id instead of the id.
+Prompt in conjunction with a ```datasource_id```. You have to use the ```model_tag_id``` to specify the model to prompt.
+NOTE: The datasource requires status == 2 and should be checked before prompting.
 ```    
 client.prompt_on_datasource(
     datasource_id=datasource_id, 

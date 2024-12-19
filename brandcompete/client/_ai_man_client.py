@@ -68,7 +68,7 @@ class AIManServiceClient():
         """_summary_
 
         Args:
-            model_tag (int): the model id
+            model_tag_id (int): the model tag id
             query (str): Query to prompt
             loader (Optional[Loader], optional): Content loader. Defaults to None.
             attachments (Optional[str], optional): Absolute path to a file. Defaults to None.

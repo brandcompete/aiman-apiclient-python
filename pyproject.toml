@@ -8,7 +8,7 @@ authors = [
   {name = "brandcompete GmbH", email = "info@brandcompete.com"}
 ]
 description = "Client Library to communicate with AIMan-API"
-version = "1.0.3"
+version = "1.0.4"
 license = {file = "LICENSE"}
 requires-python = ">= 3.8"
 dependencies = [
