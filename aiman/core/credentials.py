@@ -7,8 +7,8 @@ import json
 from typing import NamedTuple
 import jwt
 import requests
-from brandcompete.core.util import Util
-from brandcompete.core.classes import Route
+from aiman.core.util import Util
+from aiman.core.classes import Route
 
 
 class AccessToken(NamedTuple):

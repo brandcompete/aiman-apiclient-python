@@ -13,9 +13,10 @@ pip install aiman
 ## Getting started
 
 ### Instantiate the api client
-IMPORTANT: Use only the base address of the api as the url, like in this example:
+IMPORTANT: The ```host_url``` needs to be the base address of the api you want to connect to. 
+The format of the ```host_url``` should look like this example:
 ```
-from brandcompete.client import AIManServiceClient
+from aiman.client import AIManServiceClient
 
 client = AIManServiceClient(
     host_url="https://aiman-api-test.brandcompete.com",
@@ -27,8 +28,7 @@ client = AIManServiceClient(
 The client takes care of updating the token during the client's runtime if it has expired.
 
 ### Fetching available AI-Models
-This method returns a list of available models of type: AIModel (```List[AIModel]```)
-The ```model_tag_id``` needs always be specified for a prompt. This specification is located in each AIModel object. Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
+This method returns a list of available models of type ```AIModel```.
 ```
 models = client.get_models()
 for model in models:
@@ -37,7 +37,9 @@ for model in models:
 
 ### Prompting a simple query to a specific model
 
-In order to submit a query, the model must be passed as a parameter via ```model_tag```
+In order to submit a query the model for the prompt must be determined.
+This is done via the ```model_tag_id``` as parameter and can be taken from the ```AIModel``` object by ```default_model_tag_id``` property.
+Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
 ```
 response:str = client.prompt(
     model_tag_id=10,
@@ -55,7 +57,7 @@ response:dict = client.prompt(
 
 ## Raging with datasources and documents
 ### Datasource
-Init a new datasource (minimum requirements - name and summary)
+Init a new datasource with minimum requirements: ```name``` and ```summary```
 ```
 datasource_id = client.init_new_datasource(
     name="Test datasource", 
@@ -69,11 +71,11 @@ datasource_id = client.init_new_datasource(
     tags=["tagA","tagB", "etc"], 
     categories=["catA","catB","etc"])
 ```
-Fetch all datasources (associated to my account).
+Fetch all datasources (associated to your account).
 Possible status: 
-- (2)ready
-- (1)indexing
-- (0)pending
+- 2 (ready)
+- 1 (indexing)
+- 0 (pending)
 
 ```
 datasources = client.fetch_all_datasources()

@@ -10,9 +10,9 @@ from typing import (
     Optional
 )
 import requests
-from brandcompete.core.util import Util
-from brandcompete.core.credentials import TokenCredential
-from brandcompete.core.classes import (
+from aiman.core.util import Util
+from aiman.core.credentials import TokenCredential
+from aiman.core.classes import (
     AIModel,
     Attachment,
     DataSource,
@@ -82,13 +82,13 @@ class AIManServiceClient():
         """
         if "model_tag" not in kwargs:
             raise ValueError(
-                "Error: missing required argument: model_tag")
+                "Error: missing required argument: model_tag_id")
 
         if "query" not in kwargs:
             raise ValueError(
                 "Error: missing required argument: query")
 
-        model_tag: int = kwargs["model_tag"]
+        model_tag: int = kwargs["model_tag_id"]
         query = kwargs["query"]
         attachments = kwargs["attachments"] if "attachments" in kwargs else None
         prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs else None

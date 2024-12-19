@@ -8,11 +8,12 @@ authors = [
   {name = "brandcompete GmbH", email = "info@brandcompete.com"}
 ]
 description = "Client Library to communicate with AIMan-API"
-version = "1.0.4"
+version = "1.0.12"
 license = {file = "LICENSE"}
 requires-python = ">= 3.8"
 dependencies = [
     'pyjwt',
+    'requests',
     'setuptools'
 ]
 classifiers = [
