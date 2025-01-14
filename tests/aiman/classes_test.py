@@ -37,7 +37,7 @@ class ClassesTest(unittest.TestCase):
         self.assertEqual(prompt_options.mirostat_tau, 5)
         self.assertEqual(prompt_options.raw, False)
         self.assertEqual(prompt_options.keep_context, True)
-        
+
         po_dict  = prompt_options.to_dict()
         self.assertEqual(po_dict["mirostat"], 0)
         self.assertEqual(po_dict["mirostat_eta"], 0.1)
