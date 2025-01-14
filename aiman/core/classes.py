@@ -1,7 +1,3 @@
-# pylint: disable=line-too-long
-# pylint: disable=import-error
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-instance-attributes
 """Module providing different dataclasses"""
 from dataclasses import dataclass
 from enum import Enum
@@ -21,7 +17,7 @@ class AIModel:
     amount_of_pulls: str
     amount_of_tags: int
     required_memory: str
-    size: int = 0
+    size: int
 
     @classmethod
     def to_dict(cls):
@@ -42,16 +38,17 @@ class AIModel:
     @classmethod
     def from_dict(cls, values: dict):
         """Parsing a dict to a AIModel Instance"""
-        cls.id = values["id"]
-        cls.uuid = values["uuId"]
-        cls.owner_id = values["name"]
-        cls.name = values["shortDescription"]
-        cls.description = values["longDescription"]
-        cls.owner_id = values["defaultModelTagId"]
-        cls.name = values["amountOfPulls"]
-        cls.description = values["amountOfTags"]
-        cls.owner_id = values["requiredMemory"]
-        cls.name = values["size"]
+        cls.id = 0 if "id" not in values else values["id"]
+        cls.uuid = "" if "uuId" not in values else values["uuId"]
+        cls.name = "" if "name" not in values else values["name"]
+        cls.short_description = "" if "shortDescription" not in values else values["shortDescription"]
+        cls.long_description = "" if "longDescription" not in values else values["longDescription"]
+        cls.default_model_tag_id = 0 if "defaultModelTagId" not in values else values["defaultModelTagId"]
+        cls.amount_of_pulls = "" if "amountOfPulls" not in values else values["amountOfPulls"]
+        cls.amount_of_tags = 0 if "amountOfTags" not in values else values["amountOfTags"]
+        cls.required_memory = "" if "requiredMemory" not in values else values["requiredMemory"]
+        cls.size = 0 if "size" not in values else values["size"]
+        return cls
 
 
 @dataclass
@@ -82,6 +79,7 @@ class Project:
         cls.owner_id = values["ownerId"]
         cls.name = values["name"]
         cls.description = values["description"]
+        return cls
 
 
 @dataclass
@@ -103,6 +101,7 @@ class Query:
         """Parsing a dict to a Projcet Instance"""
         cls.id = values["id"]
         cls.uuid = values["uuId"]
+        return cls
 
 
 @dataclass
@@ -154,24 +153,25 @@ class PromptOptions:
     @classmethod
     def from_dict(cls, values: dict):
         """Parsing a dict to a Projcet Instance"""
-        cls.mirostat = values["mirostat"]
-        cls.mirostat_eta = values["mirostat_eta"]
-        cls.mirostat_tau = values["mirostat_tau"]
-        cls.num_ctx = values["num_ctx"]
-        cls.num_gqa = values["num_gqa"]
-        cls.num_gpu = values["num_gpu"]
-        cls.num_thread = values["num_thread"]
-        cls.repeat_last_n = values["repeat_last_n"]
-        cls.repeat_penalty = values["repeat_penalty"]
-        cls.temperature = values["temperature"]
-        cls.seed = values["seed"]
-        cls.stop = values["stop"]
-        cls.tfs_z = values["tfs_z"]
-        cls.num_predict = values["num_predict"]
-        cls.top_k = values["top_k"]
-        cls.top_p = values["top_p"]
-        cls.raw = values["raw"]
-        cls.keep_context = values["keep_context"]
+        cls.mirostat = 0 if "mirostat" not in values else values["mirostat"]
+        cls.mirostat_eta = 100 if "mirostat_eta" not in values else values["mirostat_eta"]
+        cls.mirostat_tau = 5 if "mirostat_tau" not in values else values["mirostat_tau"]
+        cls.num_ctx = 4096 if "num_ctx" not in values else values["num_ctx"]
+        cls.num_gqa = 8 if "num_gqa" not in values else values["num_gqa"]
+        cls.num_gpu = 0 if "num_gpu" not in values else values["num_gpu"]
+        cls.num_thread = 0 if "num_thread" not in values else values["num_thread"]
+        cls.repeat_last_n = 64 if "repeat_last_n" not in values else values["repeat_last_n"]
+        cls.repeat_penalty = 1.1 if "repeat_penalty" not in values else values["repeat_penalty"]
+        cls.temperature = 0.8 if "temperature" not in values else values["temperature"]
+        cls.seed = 0 if "seed" not in values else values["seed"]
+        cls.stop = None if "stop" not in values else values["stop"]
+        cls.tfs_z = 1 if "tfs_z" not in values else values["tfs_z"]
+        cls.num_predict = 2048 if "num_predict" not in values else values["num_predict"]
+        cls.top_k = 40 if "top_k" not in values else values["top_k"]
+        cls.top_p = 0.9 if "top_p" not in values else values["top_p"]
+        cls.raw = False if "raw" not in values else values["raw"]
+        cls.keep_context = True if "keep_context" not in values else values["keep_context"]
+        return cls
 
 
 @dataclass
@@ -211,17 +211,19 @@ class Prompt:
     @classmethod
     def from_dict(cls, values: dict):
         """Parsing a dict to a Prompt Instance"""
-        cls.prompt = values["prompt"]
-        cls.model_tag_id = values["modelTagId"]
-        cls.raw = values["raw"]
-        cls.stream = values["projectId"]
-        cls.project_id = values["projectTabId"]
-        cls.user_id = values["userId"]
-        cls.verbose = values["verbose"]
-        cls.repeat_last_n = values["attachments"]
-        cls.keep_context = values["keepContext"]
-        cls.keep_alive = values["keepAlive"]
-        cls.datasource_id = values["datasourceId"]
+        cls.prompt = "" if "prompt" not in values else values["prompt"]
+        cls.model_tag_id = 0 if "modelTagId" not in values else values["modelTagId"]
+        cls.raw = False if "raw" not in values else values["raw"]
+        cls.stream = False if "stream" not in values else values["stream"]
+        cls.project_id = False if "projectId" not in values else values["projectId"]
+        cls.project_tab_id = 0 if "projectTabId" not in values else values["projectTabId"]
+        cls.user_id = 0 if "userId" not in values else values["userId"]
+        cls.verbose = True if "verbose" not in values else values["verbose"]
+        cls.attachments = None if "attachments" not in values else values["attachments"]
+        cls.keep_context = True if "keepContext" not in values else values["keepContext"]
+        cls.keep_alive = "5m" if "keepAlive" not in values else values["keepAlive"]
+        cls.datasource_id = 0 if "datasourceId" not in values else values["datasourceId"]
+        return cls
 
 
 @dataclass
@@ -233,7 +235,7 @@ class DataSource:
     categories: Optional[List[str]] = None
     tags: Optional[List[str]] = None
     assoc_contexts: Optional[list] = None
-    media: Optional[List[dict]] = None
+    media: Optional[list] = None
     status: Optional[int] = -1
     media_count: Optional[int] = -1
     owner_id: Optional[int] = -1
@@ -267,6 +269,7 @@ class DataSource:
         cls.status = values["status"]
         cls.media_count = values["mediaCount"]
         cls.owner_id = values["ownerId"]
+        return cls
 
 
 @dataclass
@@ -283,6 +286,7 @@ class Media:
     def from_dict(cls, values: dict):
         """Parsing a dict to a Media Instance"""
         cls.base64 = values["base64"]
+        return cls
 
 
 @dataclass
@@ -306,10 +310,17 @@ class Attachment:
     @classmethod
     def from_dict(cls, values: dict):
         """Parsing a dict to a Media Instance"""
-        cls.name = values["name"]
-        cls.base64 = values["base64"]
-        cls.size = values["size"]
-        cls.mime_type = values["mime_type"]
+        if values == {}:
+            return cls
+        if "name" in values:
+            cls.name = values["name"]
+        if "base64" in values:
+            cls.base64 = values["base64"]
+        if "size" in values:
+            cls.size = values["size"]
+        if "mime_type" in values:
+            cls.mime_type = values["mime_type"]
+        return cls
 
 
 class Route(Enum):

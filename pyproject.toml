@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiman"
+version = "1.0.14"
 authors = [
   {name = "brandcompete GmbH", email = "info@brandcompete.com"}
 ]
 description = "Client Library to communicate with AIMan-API"
-version = "1.0.12"
-license = {file = "LICENSE"}
+readme = "README.md"
 requires-python = ">= 3.8"
 dependencies = [
     'pyjwt',
@@ -21,6 +21,7 @@ classifiers = [
     'Environment :: Console',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache Software License',
+    "Natural Language :: English",
     "Operating System :: OS Independent",
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
@@ -32,11 +33,47 @@ classifiers = [
     'Programming Language :: Python :: 3.12',
     'Topic :: Scientific/Engineering :: Artificial Intelligence'
 ]
-readme = "README.md"
 
+[project.license]
+file = "LICENSE"
+
+[project.optional-dependencies]
+dev = [
+    "pylint",
+    "toml",
+    "yapf",
+]
+test = [
+    "pytest-cov",
+]
 [project.urls]
 Homepage = "https://www.brandcompete.com"
 Repository = "https://github.com/brandcompete/aiman-apiclient-python"
+
+[tool.flit.module]
+name = "aiman"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"
+]
+
+[tool.coverage.run]
+source = ["aiman"]
+
+[tool.pylint]
+max-line-length = 120
+max-returns = 15
+max-locals = 25
+disable = [
+    "R0903", # too-few-public-methods
+    "R0911", # too-many-return-statements
+    "R0913", # too-many-arguments
+    "R0902", # too-many-instance-attributes
+    "E0401", # import-error
+]
 
 [tool.setuptools.packages]
 find = {} 

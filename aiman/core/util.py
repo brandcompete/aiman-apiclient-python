@@ -1,7 +1,3 @@
-# pylint: disable=line-too-long
-# pylint: disable=import-error
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
 """Module providing some utility or helper functions"""
 import time
 import os

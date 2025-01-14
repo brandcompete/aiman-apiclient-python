@@ -1,7 +1,3 @@
-# pylint: disable=line-too-long
-# pylint: disable=import-error
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
 """Module providing a aiman service client"""
 import json
 import base64
@@ -26,7 +22,11 @@ from aiman.core.classes import (
 class AIManServiceClient():
     """Represents the AI Manager Service Client"""
 
-    def __init__(self, host_url:str = None, user_name:str = None, password:str = None, token_credential:TokenCredential = None ) -> None:
+    def __init__(self,
+                 host_url:str = None,
+                 user_name:str = None,
+                 password:str = None,
+                 token_credential:TokenCredential = None) -> None:
         """ Instantiate a new Client to communicate with an AIMan API
             NOTE: Use host, user and password or a TokenCredential Object
 
@@ -40,11 +40,11 @@ class AIManServiceClient():
             ValueError: Missing credential informations
         """
         if token_credential is None:
-            if host_url is None:
-                raise ValueError("Missing parameter: host_url. EXPLAIN")
-            if password is None:
+            if host_url is None or len(host_url) == 0:
+                raise ValueError("Missing parameter: host_url")
+            if password is None or len(host_url) == 0:
                 raise ValueError("Missing parameter: password. ")
-            if user_name is None:
+            if user_name is None or len(host_url) == 0:
                 raise ValueError("Missing parameter: username. ")
             token_credential = TokenCredential(api_host_url=host_url, user_name=user_name,password=password)
         self.credential = token_credential
@@ -70,7 +70,6 @@ class AIManServiceClient():
         Args:
             model_tag_id (int): the model tag id
             query (str): Query to prompt
-            loader (Optional[Loader], optional): Content loader. Defaults to None.
             attachments (Optional[str], optional): Absolute path to a file. Defaults to None.
             prompt_options (Optional[PromptOptions], optional): Prompt options. Defaults to None.
 
@@ -80,7 +79,7 @@ class AIManServiceClient():
         Returns:
             dict: The API-Response as dict
         """
-        if "model_tag" not in kwargs:
+        if "model_tag_id" not in kwargs:
             raise ValueError(
                 "Error: missing required argument: model_tag_id")
 
@@ -114,7 +113,7 @@ class AIManServiceClient():
             RequestType.POST, route=route, data=prompt_dict)
         return response
 
-    def prompt_on_datasource(self, datasource_id: int, model_tag_id: int, query: str, prompt_options: PromptOptions = None) -> dict:
+    def prompt_on_datasource(self, **kwargs) -> dict:
         """Prompt on a datasource (by id)
 
         Args:
@@ -126,15 +125,23 @@ class AIManServiceClient():
         Returns:
             dict: The API-Response as dict
         """
-        if prompt_options is None:
-            prompt_options = PromptOptions()
+        if "datasource_id" not in kwargs:
+            raise ValueError("Missing required argument: datasource_id")
+
+        if "model_tag_id" not in kwargs:
+            raise ValueError("Missing required argument: model_tag_id")
+
+        if "query" not in kwargs:
+            raise ValueError("Missing required argument: query")
+
+        prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs else PromptOptions()
         prompt = Prompt()
-        prompt.prompt = query
-        prompt.datasource_id = datasource_id
+        prompt.prompt = kwargs["query"]
+        prompt.datasource_id = kwargs["datasource_id"]
         prompt_dict = prompt.to_dict()
         prompt_option_dict = prompt_options.to_dict()
-        prompt_dict['options'] = prompt_option_dict
-
+        prompt_dict["options"] = prompt_option_dict
+        model_tag_id = kwargs["model_tag_id"]
         route = f"{Route.PROMPT_WITH_DATASOURCE.value}/{model_tag_id}"
         response = self._perform_request(
             RequestType.POST, route=route, data=prompt_dict)
@@ -183,7 +190,7 @@ class AIManServiceClient():
         source = response["datasource"]
         return DataSource.from_dict(source)
 
-    def init_new_datasource(self, name: str, summary: str, tags: List[str] = None, categories: List[str] = None) -> int:
+    def init_new_datasource(self, **kwargs) -> int:
         """Initiate and add a new datasource to current account
 
         Args:
@@ -195,11 +202,17 @@ class AIManServiceClient():
         Returns:
             int: The datasource id
         """
+        if "name" not in kwargs:
+            raise ValueError("Missing required argument: name")
+
+        if "summary" not in kwargs:
+            raise ValueError("Missing required argument: summary")
+
         data = {
-            "name": name,
-            "summary": summary,
-            "tags": [] if tags is None else tags,
-            "categories": [] if categories is None else categories,
+            "name": kwargs["name"],
+            "summary": kwargs["summary"],
+            "tags": kwargs["tags"] if "tags" in kwargs else [],
+            "categories": kwargs["categories"] if "categories" in kwargs else [],
             "assocContexts": [],
             "media": []
         }
