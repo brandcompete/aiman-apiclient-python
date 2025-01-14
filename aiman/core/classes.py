@@ -8,78 +8,76 @@ from typing import List, Optional
 class AIModel:
 
     """Represents a AIModel instance"""
-    id: int
-    uu_id: str
-    name: str
-    short_description: str
-    long_description: str
-    default_model_tag_id: int
-    amount_of_pulls: str
-    amount_of_tags: int
-    required_memory: str
-    size: int
+    id: int = -1
+    uuid: str = ""
+    name: str = ""
+    short_description: str = ""
+    long_description: str = ""
+    default_model_tag_id: int = -1
+    amount_of_pulls: str = ""
+    amount_of_tags: int = -1
+    required_memory: str = -1
+    size: int = -1
 
-    @classmethod
-    def to_dict(cls):
+
+    def to_dict(self):
         """Parsing a AIModel Instance to a dict"""
         return {
-            "id": cls.id,
-            "uuId": cls.uuid,
-            "name": cls.name,
-            "shortDescription": cls.short_description,
-            "longDescription": cls.long_description,
-            "defaultModelTagId": cls.default_model_tag_id,
-            "amountOfPulls": cls.amount_of_pulls,
-            "amountOfTags": cls.amount_of_tags,
-            "requiredMemory": cls.required_memory,
-            "size": cls.size
+            "id": self.id,
+            "uuId": self.uuid,
+            "name": self.name,
+            "shortDescription": self.short_description,
+            "longDescription": self.long_description,
+            "defaultModelTagId": self.default_model_tag_id,
+            "amountOfPulls": self.amount_of_pulls,
+            "amountOfTags": self.amount_of_tags,
+            "requiredMemory": self.required_memory,
+            "size": self.size
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+
+    def from_dict(self, values: dict):
         """Parsing a dict to a AIModel Instance"""
-        cls.id = 0 if "id" not in values else values["id"]
-        cls.uuid = "" if "uuId" not in values else values["uuId"]
-        cls.name = "" if "name" not in values else values["name"]
-        cls.short_description = "" if "shortDescription" not in values else values["shortDescription"]
-        cls.long_description = "" if "longDescription" not in values else values["longDescription"]
-        cls.default_model_tag_id = 0 if "defaultModelTagId" not in values else values["defaultModelTagId"]
-        cls.amount_of_pulls = "" if "amountOfPulls" not in values else values["amountOfPulls"]
-        cls.amount_of_tags = 0 if "amountOfTags" not in values else values["amountOfTags"]
-        cls.required_memory = "" if "requiredMemory" not in values else values["requiredMemory"]
-        cls.size = 0 if "size" not in values else values["size"]
-        return cls
+        self.id = 0 if "id" not in values else values["id"]
+        self.uuid = "" if "uuId" not in values else values["uuId"]
+        self.name = "" if "name" not in values else values["name"]
+        self.short_description = "" if "shortDescription" not in values else values["shortDescription"]
+        self.long_description = "" if "longDescription" not in values else values["longDescription"]
+        self.default_model_tag_id = 0 if "defaultModelTagId" not in values else values["defaultModelTagId"]
+        self.amount_of_pulls = "" if "amountOfPulls" not in values else values["amountOfPulls"]
+        self.amount_of_tags = 0 if "amountOfTags" not in values else values["amountOfTags"]
+        self.required_memory = "" if "requiredMemory" not in values else values["requiredMemory"]
+        self.size = 0 if "size" not in values else values["size"]
+        return self
 
 
 @dataclass
 class Project:
     """Represents an aiman project"""
-    id: int
-    uuid: str
-    owner_id: int
-    name: str
-    description: str
+    id: int = -1
+    uuid: str = ""
+    owner_id: int = -1
+    name: str = ""
+    description: str = ""
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Projcet Instance to a dict"""
         return {
-            "id":           cls.id,
-            "uuId":         cls.uuid,
-            "ownerId":      cls.owner_id,
-            "name":         cls.name,
-            "description":  cls.description
+            "id":           self.id,
+            "uuId":         self.uuid,
+            "ownerId":      self.owner_id,
+            "name":         self.name,
+            "description":  self.description
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Projcet Instance"""
-        cls.id = values["id"]
-        cls.uuid = values["uuId"]
-        cls.owner_id = values["ownerId"]
-        cls.name = values["name"]
-        cls.description = values["description"]
-        return cls
+        self.id = values["id"]
+        self.uuid = values["uuId"]
+        self.owner_id = values["ownerId"]
+        self.name = values["name"]
+        self.description = values["description"]
+        return self
 
 
 @dataclass
@@ -126,52 +124,50 @@ class PromptOptions:
     raw: bool = False
     keep_context: bool = True
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Projcet Instance to a dict"""
         return {
-            "mirostat":         cls.mirostat,
-            "mirostat_eta":     cls.mirostat_eta,
-            "mirostat_tau":     cls.mirostat_tau,
-            "num_ctx":          cls.num_ctx,
-            "num_gqa":          cls.num_gqa,
-            "num_gpu":          cls.num_gpu,
-            "num_thread":       cls.num_thread,
-            "repeat_last_n":    cls.repeat_last_n,
-            "repeat_penalty":   cls.repeat_penalty,
-            "temperature":      cls.temperature,
-            "seed":             cls.seed,
-            "stop":             cls.stop,
-            "tfs_z":            cls.tfs_z,
-            "num_predict":      cls.num_predict,
-            "top_k":            cls.top_k,
-            "top_p":            cls.top_p,
-            "raw":              cls.raw,
-            "keep_context":     cls.keep_context
+            "mirostat":         self.mirostat,
+            "mirostat_eta":     self.mirostat_eta,
+            "mirostat_tau":     self.mirostat_tau,
+            "num_ctx":          self.num_ctx,
+            "num_gqa":          self.num_gqa,
+            "num_gpu":          self.num_gpu,
+            "num_thread":       self.num_thread,
+            "repeat_last_n":    self.repeat_last_n,
+            "repeat_penalty":   self.repeat_penalty,
+            "temperature":      self.temperature,
+            "seed":             self.seed,
+            "stop":             self.stop,
+            "tfs_z":            self.tfs_z,
+            "num_predict":      self.num_predict,
+            "top_k":            self.top_k,
+            "top_p":            self.top_p,
+            "raw":              self.raw,
+            "keep_context":     self.keep_context
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Projcet Instance"""
-        cls.mirostat = 0 if "mirostat" not in values else values["mirostat"]
-        cls.mirostat_eta = 100 if "mirostat_eta" not in values else values["mirostat_eta"]
-        cls.mirostat_tau = 5 if "mirostat_tau" not in values else values["mirostat_tau"]
-        cls.num_ctx = 4096 if "num_ctx" not in values else values["num_ctx"]
-        cls.num_gqa = 8 if "num_gqa" not in values else values["num_gqa"]
-        cls.num_gpu = 0 if "num_gpu" not in values else values["num_gpu"]
-        cls.num_thread = 0 if "num_thread" not in values else values["num_thread"]
-        cls.repeat_last_n = 64 if "repeat_last_n" not in values else values["repeat_last_n"]
-        cls.repeat_penalty = 1.1 if "repeat_penalty" not in values else values["repeat_penalty"]
-        cls.temperature = 0.8 if "temperature" not in values else values["temperature"]
-        cls.seed = 0 if "seed" not in values else values["seed"]
-        cls.stop = None if "stop" not in values else values["stop"]
-        cls.tfs_z = 1 if "tfs_z" not in values else values["tfs_z"]
-        cls.num_predict = 2048 if "num_predict" not in values else values["num_predict"]
-        cls.top_k = 40 if "top_k" not in values else values["top_k"]
-        cls.top_p = 0.9 if "top_p" not in values else values["top_p"]
-        cls.raw = False if "raw" not in values else values["raw"]
-        cls.keep_context = True if "keep_context" not in values else values["keep_context"]
-        return cls
+        self.mirostat = 0 if "mirostat" not in values else values["mirostat"]
+        self.mirostat_eta = 100 if "mirostat_eta" not in values else values["mirostat_eta"]
+        self.mirostat_tau = 5 if "mirostat_tau" not in values else values["mirostat_tau"]
+        self.num_ctx = 4096 if "num_ctx" not in values else values["num_ctx"]
+        self.num_gqa = 8 if "num_gqa" not in values else values["num_gqa"]
+        self.num_gpu = 0 if "num_gpu" not in values else values["num_gpu"]
+        self.num_thread = 0 if "num_thread" not in values else values["num_thread"]
+        self.repeat_last_n = 64 if "repeat_last_n" not in values else values["repeat_last_n"]
+        self.repeat_penalty = 1.1 if "repeat_penalty" not in values else values["repeat_penalty"]
+        self.temperature = 0.8 if "temperature" not in values else values["temperature"]
+        self.seed = 0 if "seed" not in values else values["seed"]
+        self.stop = None if "stop" not in values else values["stop"]
+        self.tfs_z = 1 if "tfs_z" not in values else values["tfs_z"]
+        self.num_predict = 2048 if "num_predict" not in values else values["num_predict"]
+        self.top_k = 40 if "top_k" not in values else values["top_k"]
+        self.top_p = 0.9 if "top_p" not in values else values["top_p"]
+        self.raw = False if "raw" not in values else values["raw"]
+        self.keep_context = True if "keep_context" not in values else values["keep_context"]
+        return self
 
 
 @dataclass
@@ -229,8 +225,8 @@ class Prompt:
 @dataclass
 class DataSource:
     """Represents a prompt datasource (raging)"""
-    name: str
-    summary: str
+    name: str = ""
+    summary: str = ""
     id: Optional[int] = -1
     categories: Optional[List[str]] = None
     tags: Optional[List[str]] = None
@@ -240,36 +236,34 @@ class DataSource:
     media_count: Optional[int] = -1
     owner_id: Optional[int] = -1
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a DataSource Instance to a dict"""
         return {
-            "name":             cls.name,
-            "summary":          cls.summary,
-            "id":               cls.categories,
-            "categories":       cls.categories,
-            "tags":             cls.tags,
-            "assocContexts":    cls.assoc_contexts,
-            "media":            cls.media,
-            "status":           cls.status,
-            "mediaCount":       cls.media_count,
-            "ownerId":          cls.owner_id
+            "name":             self.name,
+            "summary":          self.summary,
+            "id":               self.categories,
+            "categories":       self.categories,
+            "tags":             self.tags,
+            "assocContexts":    self.assoc_contexts,
+            "media":            self.media,
+            "status":           self.status,
+            "mediaCount":       self.media_count,
+            "ownerId":          self.owner_id
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a DataSource Instance"""
-        cls.name = values["name"]
-        cls.summary = values["summary"]
-        cls.id = values["id"]
-        cls.categories = values["categories"]
-        cls.tags = values["tags"]
-        cls.assoc_contexts = values["assocContexts"]
-        cls.media = values["media"]
-        cls.status = values["status"]
-        cls.media_count = values["mediaCount"]
-        cls.owner_id = values["ownerId"]
-        return cls
+        self.name = values["name"]
+        self.summary = values["summary"]
+        self.id = values["id"]
+        self.categories = values["categories"]
+        self.tags = values["tags"]
+        self.assoc_contexts = values["assocContexts"]
+        self.media = values["media"]
+        self.status = values["status"]
+        self.media_count = values["mediaCount"]
+        self.owner_id = values["ownerId"]
+        return self
 
 
 @dataclass

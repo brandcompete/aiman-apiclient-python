@@ -10,14 +10,16 @@ class ClassesTest(unittest.TestCase):
     """
     def test_model_class(self):
         """_summary_"""
-        result = AIModel.from_dict({})
-        self.assertEqual(result.name, "")
+        empty_model = AIModel()
+        empty_model.from_dict({})
+        self.assertEqual(empty_model.name, "")
 
-        result = AIModel.from_dict({"name":"TEST"})
+        model = AIModel()
+        result = model.from_dict({"name":"TEST"})
         self.assertEqual(result.name, "TEST")
 
-        to_dict = AIModel.to_dict()
-        self.assertEqual(to_dict["name"], "TEST")
+        dict_model = model.to_dict()
+        self.assertEqual(dict_model["name"], "TEST")
 
     def test_prompt_class(self):
         """_summary_"""
