@@ -140,8 +140,7 @@ class AIManServiceClient():
         prompt.prompt = kwargs["query"]
         prompt.datasource_id = kwargs["datasource_id"]
         prompt_dict = prompt.to_dict()
-        prompt_option_dict = prompt_options.to_dict()
-        prompt_dict["options"] = prompt_option_dict
+        prompt_dict["options"] = prompt_options.to_dict()
         model_tag_id = kwargs["model_tag_id"]
         route = f"{Route.PROMPT_WITH_DATASOURCE.value}/{model_tag_id}"
         response = self._perform_request(
@@ -173,7 +172,6 @@ class AIManServiceClient():
         datasources = []
         for response in fetch_all_response["datasources"]:
             source = self.get_datasource_by_id(response["id"])
-
             datasources.append(source)
         return datasources
 

@@ -186,40 +186,38 @@ class Prompt:
     keep_alive: str = "5m"
     datasource_id: int = 0
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Prompt Instance to a dict"""
         return {
-            "prompt":       cls.prompt,
-            "modelTagId":   cls.model_tag_id,
-            "raw":          cls.raw,
-            "stream":       cls.stream,
-            "projectId":    cls.project_id,
-            "projectTabId": cls.project_tab_id,
-            "userId":       cls.user_id,
-            "verbose":      cls.verbose,
-            "attachments":  cls.attachments,
-            "keepContext":  cls.keep_context,
-            "keepAlive":    cls.keep_alive,
-            "datasourceId": cls.datasource_id
+            "prompt":       self.prompt,
+            "modelTagId":   self.model_tag_id,
+            "raw":          self.raw,
+            "stream":       self.stream,
+            "projectId":    self.project_id,
+            "projectTabId": self.project_tab_id,
+            "userId":       self.user_id,
+            "verbose":      self.verbose,
+            "attachments":  self.attachments,
+            "keepContext":  self.keep_context,
+            "keepAlive":    self.keep_alive,
+            "datasourceId": self.datasource_id
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Prompt Instance"""
-        cls.prompt = "" if "prompt" not in values else values["prompt"]
-        cls.model_tag_id = 0 if "modelTagId" not in values else values["modelTagId"]
-        cls.raw = False if "raw" not in values else values["raw"]
-        cls.stream = False if "stream" not in values else values["stream"]
-        cls.project_id = False if "projectId" not in values else values["projectId"]
-        cls.project_tab_id = 0 if "projectTabId" not in values else values["projectTabId"]
-        cls.user_id = 0 if "userId" not in values else values["userId"]
-        cls.verbose = True if "verbose" not in values else values["verbose"]
-        cls.attachments = None if "attachments" not in values else values["attachments"]
-        cls.keep_context = True if "keepContext" not in values else values["keepContext"]
-        cls.keep_alive = "5m" if "keepAlive" not in values else values["keepAlive"]
-        cls.datasource_id = 0 if "datasourceId" not in values else values["datasourceId"]
-        return cls
+        self.prompt = "" if "prompt" not in values else values["prompt"]
+        self.model_tag_id = 0 if "modelTagId" not in values else values["modelTagId"]
+        self.raw = False if "raw" not in values else values["raw"]
+        self.stream = False if "stream" not in values else values["stream"]
+        self.project_id = False if "projectId" not in values else values["projectId"]
+        self.project_tab_id = 0 if "projectTabId" not in values else values["projectTabId"]
+        self.user_id = 0 if "userId" not in values else values["userId"]
+        self.verbose = True if "verbose" not in values else values["verbose"]
+        self.attachments = None if "attachments" not in values else values["attachments"]
+        self.keep_context = True if "keepContext" not in values else values["keepContext"]
+        self.keep_alive = "5m" if "keepAlive" not in values else values["keepAlive"]
+        self.datasource_id = 0 if "datasourceId" not in values else values["datasourceId"]
+        return self
 
 
 @dataclass
@@ -269,18 +267,16 @@ class DataSource:
 @dataclass
 class Media:
     """Represents a prompt media"""
-    base64: str
+    base64: str = ""
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Media Instance to a dict"""
-        return { "base64":  cls.base64}
+        return { "base64":  self.base64}
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Media Instance"""
-        cls.base64 = values["base64"]
-        return cls
+        self.base64 = values["base64"]
+        return self
 
 
 @dataclass
@@ -291,40 +287,39 @@ class Attachment:
     size: int = 0
     mime_type: str = ""
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Media Instance to a dict"""
         return {
-            "base64":   cls.base64,
-            "name":     cls.name,
-            "size":     cls.size,
-            "mime_type":cls.mime_type
-            }
+            "base64":   self.base64,
+            "name":     self.name,
+            "size":     self.size,
+            "mime_type":self.mime_type
+        }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Media Instance"""
         if values == {}:
-            return cls
+            return self
         if "name" in values:
-            cls.name = values["name"]
+            self.name = values["name"]
         if "base64" in values:
-            cls.base64 = values["base64"]
+            self.base64 = values["base64"]
         if "size" in values:
-            cls.size = values["size"]
+            self.size = values["size"]
         if "mime_type" in values:
-            cls.mime_type = values["mime_type"]
-        return cls
+            self.mime_type = values["mime_type"]
+        return self
 
 
 class Route(Enum):
     """Enumeration of different routes"""
-    GET_MODELS = '/api/v1/models'
-    AUTH = '/api/v1/auth/authenticate'
-    AUTH_REFRESH = '/api/v1/auth/refresh'
-    PROMPT = '/api/v1/prompts/model_tag'
-    PROMPT_WITH_DATASOURCE = '/api/v1/prompts'
-    DATA_SOURCE = '/api/v1/datasources'
+    BASE = '/api/v1/'
+    GET_MODELS = f'{BASE}models'
+    AUTH = f'{BASE}auth/authenticate'
+    AUTH_REFRESH = f'{BASE}auth/refresh'
+    PROMPT = f'{BASE}prompts/model_tag'
+    PROMPT_WITH_DATASOURCE = f'{BASE}prompts'
+    DATA_SOURCE = f'{BASE}datasources'
 
 
 class RequestType(Enum):

@@ -41,18 +41,18 @@ In order to submit a query the model for the prompt must be determined.
 This is done via the ```model_tag_id``` as parameter and can be taken from the ```AIModel``` object by ```default_model_tag_id``` property.
 Alternatively, you can also view available models [here](https://aiman-dev.brandcompete.com/help/models)
 ```
-response:str = client.prompt(
+response:dict = client.prompt(
     model_tag_id=10,
-    query="my question to AI-Model")
+    query="Enter a question to prompt for")
+print(response["responseText"])
 ```
 
 ### Prompting a query and attach one or more files
 ```    
 response:dict = client.prompt(
     model_tag_id=1, 
-    query="My query ask something about the given file content...", 
+    query="Enter a question to ask something about the given file content...", 
     attachments=["file/path/file_1.pdf", "file/path/file_2.xlsx"])
-   
 ```
 
 ## Raging with datasources and documents
