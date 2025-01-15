@@ -23,13 +23,14 @@ class ClassesTest(unittest.TestCase):
 
     def test_prompt_class(self):
         """_summary_"""
-        result = Prompt.from_dict({})
-        self.assertEqual(result.prompt, "")
+        prompt = Prompt()
+        prompt.from_dict({})
+        self.assertEqual(prompt.prompt, "")
         to_compare = "this is my prompt"
-        result = Prompt.from_dict({"prompt": to_compare})
-        self.assertEqual(result.prompt, to_compare)
-        to_dict = Prompt.to_dict()
-        self.assertEqual(to_dict["prompt"], to_compare)
+        prompt.from_dict({"prompt": to_compare})
+        self.assertEqual(prompt.prompt, to_compare)
+        prompt_dict = prompt.to_dict()
+        self.assertEqual(prompt_dict["prompt"], to_compare)
 
     def test_prompt_options_class(self):
         """_summary_"""
