@@ -135,7 +135,7 @@ class AIManServiceClient():
         if "query" not in kwargs:
             raise ValueError("Missing required argument: query")
 
-        prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs else PromptOptions()
+        prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs and kwargs["prompt_options"] else PromptOptions()
         prompt = Prompt()
         prompt.prompt = kwargs["query"]
         prompt.datasource_id = kwargs["datasource_id"]
@@ -371,7 +371,7 @@ class AIManServiceClient():
 
         if response.status_code not in [200, 201, 202]:
             raise RuntimeError(
-                f"[{response.status_code}] Reason: {response.reason}")
+                f"[{response.status_code}]-{response.text}")
 
         content = json.loads(response.content.decode('utf-8'))
         return content['messageContent']['data']
