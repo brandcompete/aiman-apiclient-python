@@ -90,8 +90,8 @@ class AIManServiceClient():
 
         model_tag: int = kwargs["model_tag_id"]
         query = kwargs["query"]
-        attachments = kwargs["attachments"] if "attachments" in kwargs else None
-        prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs else None
+        attachments = kwargs["attachments"] if Util.has_parameter("attachments", kwargs) in kwargs else None
+        prompt_options = kwargs["prompt_options"] if Util.has_parameter("prompt_options", kwargs) in kwargs else None
 
         if prompt_options is None:
             prompt_options = PromptOptions()
@@ -135,7 +135,7 @@ class AIManServiceClient():
         if "query" not in kwargs:
             raise ValueError("Missing required argument: query")
 
-        prompt_options = kwargs["prompt_options"] if "prompt_options" in kwargs and kwargs["prompt_options"] else PromptOptions()
+        prompt_options = kwargs["prompt_options"] if Util.has_parameter("prompt_options", kwargs) else PromptOptions()
         prompt = Prompt()
         prompt.prompt = kwargs["query"]
         prompt.datasource_id = kwargs["datasource_id"]
@@ -211,8 +211,8 @@ class AIManServiceClient():
         data = {
             "name": kwargs["name"],
             "summary": kwargs["summary"],
-            "tags": kwargs["tags"] if "tags" in kwargs else [],
-            "categories": kwargs["categories"] if "categories" in kwargs else [],
+            "tags": kwargs["tags"] if Util.has_parameter("tags", kwargs) else [],
+            "categories": kwargs["categories"] if Util.has_parameter("categories", kwargs) else [],
             "assocContexts": [],
             "media": []
         }

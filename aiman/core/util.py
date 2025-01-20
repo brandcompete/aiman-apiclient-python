@@ -125,6 +125,17 @@ class Util:
             return f"image/{file_ext}"
         return None
 
+    @classmethod
+    def has_parameter(cls, parameter_name:str, args:dict) -> bool:
+        """Check if specific parameter is set or accessable
+
+        Args:
+            parameter_name (str): name of the arg to search for
+            args (dict): arguments to check
+        Returns:
+            str: None or mime type
+        """
+        return parameter_name in args and args[parameter_name]
 __all__ = [
     "Util"
 ]
