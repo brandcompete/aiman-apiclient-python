@@ -4,9 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aiman"
-version = "1.0.14"
+version = "1.0.18"
 authors = [
-  {name = "brandcompete GmbH", email = "info@brandcompete.com"}
+  { name = "brandcompete GmbH", email = "info@brandcompete.com" },
+  { name = "Thorsten Atzeni", email = "thorsten.atzeni@brandcompete.com" },
+  { name = "Dennis Hauser", email = "dennis.hauser@brandcompete.com" }
 ]
 description = "Client Library to communicate with AIMan-API"
 readme = "README.md"
@@ -21,8 +23,8 @@ classifiers = [
     'Environment :: Console',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache Software License',
-    "Natural Language :: English",
-    "Operating System :: OS Independent",
+    'Natural Language :: English',
+    'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3 :: Only',
@@ -33,9 +35,6 @@ classifiers = [
     'Programming Language :: Python :: 3.12',
     'Topic :: Scientific/Engineering :: Artificial Intelligence'
 ]
-
-[project.license]
-file = "LICENSE"
 
 [project.optional-dependencies]
 dev = [
@@ -48,7 +47,8 @@ test = [
 ]
 [project.urls]
 Homepage = "https://www.brandcompete.com"
-Repository = "https://github.com/brandcompete/aiman-apiclient-python"
+Source = "https://github.com/brandcompete/aiman-apiclient-python"
+AIMan-Login = "https://aiman.brandcompete.com"
 
 [tool.flit.module]
 name = "aiman"
