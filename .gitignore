@@ -1,6 +1,8 @@
 __pycache__
 .vscode/**
 !.vscode/launch.json
+*.iml
+.idea/
 venv
 venv/**
 .venv
@@ -32,3 +34,5 @@ MANIFEST
 
 pypirc.*
 !pypirc.template
+
+
