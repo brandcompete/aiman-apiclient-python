@@ -202,6 +202,7 @@ class Prompt:
             "keepAlive":    self.keep_alive,
             "datasourceId": self.datasource_id
         }
+        
 
     def from_dict(self, values: dict):
         """Parsing a dict to a Prompt Instance"""
