@@ -101,3 +101,39 @@ client.prompt_on_datasource(
     query="can you please summarize the content?", 
     prompt_options = None)
 ```
+### Prompt options
+You can pass prompt options as a optional parameter to any kind of prompt
+``` 
+    options = PromptOptions()
+    options.keep_context = True,
+    options.num_ctx = 8128
+    options.raw = True
+    options.temperature = 0.4
+    options.mirostat = 0
+    options.mirostat_eta = 0.1
+    options.mirostat_tau = 5
+    options.num_gqa = 8
+    options.num_gpu = 0
+    options.num_thread = 0
+    options.repeat_last_n = 64
+    options.repeat_penalty = 1.1
+    options.seed = 0
+```
+
+Executing prompt with options
+Simple prompt example:
+```
+response:dict = client.prompt(
+    model_tag_id=10,
+    query="Enter a question to prompt for"
+    prompt_options = options
+    )
+```
+Prompt on datasource example:
+```
+client.prompt_on_datasource(
+    datasource_id=datasource_id, 
+    model_tag_id=200, 
+    query="can you please summarize the content?", 
+    prompt_options = options)
+```

@@ -90,8 +90,10 @@ class AIManServiceClient():
 
         model_tag: int = kwargs["model_tag_id"]
         query = kwargs["query"]
-        attachments = kwargs["attachments"] if Util.has_parameter("attachments", kwargs) in kwargs else None
-        prompt_options = kwargs["prompt_options"] if Util.has_parameter("prompt_options", kwargs) in kwargs else None
+        attachments = kwargs["attachments"] if Util.has_parameter("attachments", kwargs) else None
+        prompt_options = kwargs["prompt_options"] if Util.has_parameter("prompt_options", kwargs) else PromptOptions()
+        if not isinstance(prompt_options, PromptOptions):
+            raise ValueError("Passed parameter promp_options needs to be type of PromptOptions")
 
         if prompt_options is None:
             prompt_options = PromptOptions()
@@ -136,6 +138,9 @@ class AIManServiceClient():
             raise ValueError("Missing required argument: query")
 
         prompt_options = kwargs["prompt_options"] if Util.has_parameter("prompt_options", kwargs) else PromptOptions()
+        if not isinstance(prompt_options, PromptOptions):
+            raise ValueError("Passed parameter promp_options needs to be type of PromptOptions")
+
         prompt = Prompt()
         prompt.prompt = kwargs["query"]
         prompt.datasource_id = kwargs["datasource_id"]
