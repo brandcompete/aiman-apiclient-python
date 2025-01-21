@@ -120,8 +120,7 @@ You can pass prompt options as a optional parameter to any kind of prompt
     options.seed = 0
 ```
 
-Executing prompt with options
-Simple prompt example:
+Executing prompt with options:
 ```
 response:dict = client.prompt(
     model_tag_id=10,
