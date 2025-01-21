@@ -7,7 +7,7 @@ Python version: >=3.8.1
 ## Installation
 
 ```
-pip install aiman
+pip install aiman-client
 ```
 
 ## Getting started
