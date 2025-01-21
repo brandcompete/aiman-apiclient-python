@@ -19,7 +19,7 @@ from aiman.core.classes import (
 )
 
 
-class AIManServiceClient():
+class AimanClient():
     """Represents the AI Manager Service Client"""
 
     def __init__(self,

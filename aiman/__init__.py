@@ -1,5 +1,5 @@
 """aiman module"""
-from .client._ai_man_client import AIManServiceClient
+from .client._ai_man_client import AimanClient
 from .core.credentials import TokenCredential
 from .core.util import Util
 from .core.classes import (
@@ -9,7 +9,7 @@ from .core.classes import (
     PromptOptions)
 
 __all__ = [
-    "AIManServiceClient",
+    "AimanClient",
     "TokenCredential",
     "Util",
     "AIModel",
