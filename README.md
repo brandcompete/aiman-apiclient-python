@@ -2,7 +2,7 @@
 [![Package](https://img.shields.io/badge/package-latest-blue.svg)](https://test.pypi.org/project/aiman) [![brandCompete](https://img.shields.io/badge/brandcompete-home-darkred.svg)](https://www.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_ui-dev-green.svg)](https://aiman-dev.brandcompete.com) [![AIMan](https://img.shields.io/badge/aiman_api-dev-green.svg)](https://aiman-api-dev.brandcompete.com/api/v1/spec-ext.html)
 
 ## Preconditions
-Python version: >=3.8.1,<=3.12
+Python version: >=3.8.1
 
 ## Installation
 
@@ -16,9 +16,9 @@ pip install aiman
 IMPORTANT: The ```host_url``` needs to be the base address of the api you want to connect to. 
 The format of the ```host_url``` should look like this example:
 ```
-from aiman.client import AIManServiceClient
+from aiman.client import AimanClient
 
-client = AIManServiceClient(
+client = AimanClient(
     host_url="https://aiman-api-test.brandcompete.com",
     user_name="john@doe.com",
     password="top_secret")
