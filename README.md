@@ -102,26 +102,33 @@ client.prompt_on_datasource(
     prompt_options = None)
 ```
 ### Prompt options
-You can pass prompt options as a optional parameter to any kind of prompt
+You can pass prompt options as a optional parameter to any kind of prompt.
+
+New instance with current properties and their default values. 
 ``` 
-    options = PromptOptions()
-    options.keep_context = True,
-    options.num_ctx = 8128
-    options.raw = True
-    options.temperature = 0.4
-    options.mirostat = 0
-    options.mirostat_eta = 0.1
-    options.mirostat_tau = 5
-    options.num_gqa = 8
-    options.num_gpu = 0
-    options.num_thread = 0
-    options.repeat_last_n = 64
-    options.repeat_penalty = 1.1
-    options.seed = 0
+from aiman.core.classes import PromptOptions
+
+options = PromptOptions()
+options.keep_context = True,
+options.num_ctx = 8128
+options.raw = True
+options.temperature = 0.8
+options.mirostat = 0
+options.mirostat_eta = 0.1
+options.mirostat_tau = 5
+options.num_gqa = 8
+options.num_gpu = 0
+options.num_thread = 0
+options.repeat_last_n = 64
+options.repeat_penalty = 1.1
+options.seed = 0
 ```
 
 Executing prompt with options:
 ```
+options = PromptOptions()
+options.keep_context = False
+
 response:dict = client.prompt(
     model_tag_id=10,
     query="Enter a question to prompt for"
@@ -130,6 +137,9 @@ response:dict = client.prompt(
 ```
 Prompt on datasource example:
 ```
+options = PromptOptions()
+options.temperature = 0.2
+
 client.prompt_on_datasource(
     datasource_id=datasource_id, 
     model_tag_id=200, 
