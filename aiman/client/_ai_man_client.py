@@ -95,8 +95,6 @@ class AimanClient():
         if not isinstance(prompt_options, PromptOptions):
             raise ValueError("Passed parameter promp_options needs to be type of PromptOptions")
 
-        if prompt_options is None:
-            prompt_options = PromptOptions()
         prompt = Prompt()
         prompt.prompt = query
         prompt_dict = prompt.to_dict()
@@ -106,7 +104,7 @@ class AimanClient():
             medias = self._build_media_attachments(attachments)
             prompt_dict['attachments'] = []
             for media in medias:
-                prompt_dict['attachments'].append(media.to_dict(media))
+                prompt_dict['attachments'].append(media.to_dict())
 
         prompt_dict['raw'] = prompt_options.raw
         prompt_dict['keepContext'] = prompt_options.keep_context
