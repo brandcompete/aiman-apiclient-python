@@ -18,7 +18,6 @@ from aiman.core.classes import (
     RequestType
 )
 
-
 class AimanClient():
     """Represents the AI Manager Service Client"""
 

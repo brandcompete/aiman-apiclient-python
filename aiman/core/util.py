@@ -116,12 +116,18 @@ class Util:
         if file_ext == "pdf":
             return "application/pdf"
         if file_ext == "csv":
-            return "application/csv"
+            return "text/csv"
         if file_ext == "xlsx":
             return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         if file_ext == "docx":
-            return ""
-        if file_ext in {"png", "tif", "jpeg", "jpg"}:
+            return "application/msword"
+        if file_ext == "txt":
+            return "text/plain"
+        if file_ext == "html":
+            return "text/html"
+        if file_ext == "json":
+            return "application/json"
+        if file_ext in {"png", "tif", "jpeg", "jpg", "gif"}:
             return f"image/{file_ext}"
         return None
 

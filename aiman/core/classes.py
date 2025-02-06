@@ -86,20 +86,18 @@ class Query:
     id: int
     uuid: str
 
-    @classmethod
-    def to_dict(cls):
+    def to_dict(self):
         """Parsing a Projcet Instance to a dict"""
         return {
-            "id":   cls.id,
-            "uuId": cls.uuid
+            "id":   self.id,
+            "uuId": self.uuid
         }
 
-    @classmethod
-    def from_dict(cls, values: dict):
+    def from_dict(self, values: dict):
         """Parsing a dict to a Projcet Instance"""
-        cls.id = values["id"]
-        cls.uuid = values["uuId"]
-        return cls
+        self.id = values["id"]
+        self.uuid = values["uuId"]
+        return self
 
 
 @dataclass
