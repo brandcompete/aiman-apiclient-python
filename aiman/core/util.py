@@ -125,6 +125,8 @@ class Util:
             return "text/plain"
         if file_ext == "html":
             return "text/html"
+        if file_ext == "md":
+            return "text/markdown"
         if file_ext == "json":
             return "application/json"
         if file_ext in {"png", "tif", "jpeg", "jpg", "gif"}:
