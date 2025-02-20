@@ -291,10 +291,11 @@ class AimanClient():
         Returns:
             List[Attachments]: List of Attachment instances
         """
+        if isinstance(sources, str):
+            sources = [sources]
         medias = []
         for path_or_url in sources:
             attachment = Attachment()
-            path_or_url = path_or_url.lower()
             if Util.validate_url(url=path_or_url, check_only=True):
                 attachment.name = path_or_url
                 attachment.mime_type = "text/x-uri"

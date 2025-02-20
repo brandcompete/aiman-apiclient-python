@@ -59,3 +59,10 @@ class UtilTest(unittest.TestCase):
 
         mimetype = aiman.Util.get_mimetype_by_ext("tif")
         self.assertEqual(mimetype, "image/tif")
+
+    def test_get_file_name_and_ext(self):
+        """_summary_"""
+        fp = "/srv/tools/ai_image/tmp_images/gabor/4128.jpg"
+        filename, ext = aiman.Util.get_file_name_and_ext(file_path=fp)
+        self.assertEqual(filename, "4128.jpg")
+        self.assertEqual(ext, "jpg")
